@@ -1,0 +1,44 @@
+body {
+  margin: auto;
+  width: 960px;
+}
+
+text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+  stroke: black;
+  /*stroke: url(#temperature-gradient);*/
+  stroke-width: 1.5px;
+}
+
+#playhead {
+  fill: none;
+  stroke: darkred;
+  stroke-width: 1.5px;
+}
+#playheadGhost {
+  fill: none;
+  stroke: darkred;
+  stroke-width: 1.5px;
+  stroke-dasharray: "3, 3";
+  opacity: 0.5;
+}
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  fill: none;
+  stroke: steelblue;
+}

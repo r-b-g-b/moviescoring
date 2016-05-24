@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Plots</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='popcorn-complete.min.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="http://d3js.org/colorbrewer.v1.min.js"></script>
+</head>
+
+
+<body>
+<table class="table table-bordered" style="margin-left:50px; width:800px;">
+{% set ext = vidpath.split('.')[1] %}
+{% if ext == 'ogv' %}
+{% set ext = 'ogg' %}
+{% endif %}
+<tr>
+<td>
+<video width="400" height="300" id="video" controls>
+  <source src="/video/{{ vidpath }}" type="video/{{ ext }}">
+</video>
+</td>
+</tr>
+
+</table>
+<script type="text/javascript" src="{{ url_for('static', filename='plot.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='movie.js') }}"></script>
+<script type="text/javascript">
+  $().ready(function(){
+    updateChart({{ data|safe }});
+  });
+</script>
+
+</body>
+</html>

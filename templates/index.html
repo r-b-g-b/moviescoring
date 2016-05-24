@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>Index</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+
+<body>
+<form id="selection" role="form" method="post" action="/select">
+<table class="table table-bordered" style="margin-left:50px; width:800px;">
+<tr>
+<td>
+<fieldset>
+{% for vidpath in vidpaths %}
+	<input type="radio" name="film_{{ loop.index0 }}" value="{{ vidpath }}">{{vidpath}}
+	<br>
+{% endfor %}	
+</fieldset>
+</td>
+<td>
+{% for datpath in datpaths %}
+<input type="checkbox" name="dataset_{{ loop.index0 }}" value="{{ datpath }}">{{datpath}}
+<br>
+{% endfor %}
+</td>
+</tr>
+
+</table>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+</body>
+</html>
