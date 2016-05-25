@@ -63,7 +63,7 @@ Chart = function() {
           return 'translate('+xpos+',0)';
         });
       })
-    .on('mousein', function() { d3.select('#playheadGhost').style('opacity', 1); })
+    .on('mouseover', function() { d3.select('#playheadGhost').style('opacity', 0.5); })
     .on('mouseout', function() { d3.select('#playheadGhost').style('opacity', 0); })
     // .on('mousemove', mousemove)
     .on('click', function () {
@@ -99,6 +99,7 @@ Chart.prototype.updateChart = function(data) {
     .attr('id', 'trace_'+this.nplots)
     .attr('d', this.lineGenerator(dat))
     .attr('class', 'line')
+    .attr('transform', 'translate(0,'+this.y(iplot)+')')
   
   $('#visible_'+iplot).change(function() {
     var newOpacity = this.checked ? 1 : 0;
