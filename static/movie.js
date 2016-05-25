@@ -15,7 +15,6 @@ video.on("canplayall", function() {
   // Iterate all events and trigger them on the video B
   // whenever they occur on the video A
   this.on("play", function() {
-    console.log('playing');
   });
 
   this.on("pause", function() {
@@ -24,7 +23,7 @@ video.on("canplayall", function() {
 
   this.on("timeupdate", function() {
     d3.select('#playhead').attr('transform', function() {
-      return 'translate('+x(video.currentTime())+',0)';
+      return 'translate('+chart.x(video.currentTime())+',0)';
     })
   });
 

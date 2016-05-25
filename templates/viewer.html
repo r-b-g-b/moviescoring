@@ -26,11 +26,17 @@
 </tr>
 
 </table>
+{% for d in data %}
+<input type="checkbox" id="visible_{{ loop.index0 }}" checked>{{ d.name }}<br>
+{% endfor %}
 <script type="text/javascript" src="{{ url_for('static', filename='plot.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='movie.js') }}"></script>
 <script type="text/javascript">
   $().ready(function(){
-    updateChart({{ data|safe }});
+    chart = new Chart()
+    {% for d in data %}
+    chart.updateChart({{ d|safe }});
+    {% endfor %}
   });
 </script>
 

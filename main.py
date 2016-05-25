@@ -4,22 +4,6 @@ import json
 from glob import glob
 from flask import Flask, request, render_template, send_from_directory
 
-from flask import make_response
-from functools import wraps, update_wrapper
-from datetime import datetime
-
-def nocache(view):
-    @wraps(view)
-    def no_cache(*args, **kwargs):
-        response = make_response(view(*args, **kwargs))
-        response.headers['Last-Modified'] = datetime.now()
-        response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
-        response.headers['Pragma'] = 'no-cache'
-        response.headers['Expires'] = '-1'
-        return response
-        
-    return update_wrapper(no_cache, view)
-
 app = Flask(__name__)
 MOVIE_DIR = '/auto/k8/robertg/stimuli/shortfilms/'
 # MOVIE_DIR2 = '/auto/k1/robertg/Documents/notebooks/soundtrack/movies2'
@@ -33,11 +17,9 @@ def load_timeseries(path):
 	f = np.load(os.path.join(DATA_DIR, path))
 	return f['time'], f['val']
 
-def pack(times, data):
-	return [{'time':t, 'val':d} for t,d in zip(times, data)]
+def pack_timeseries(times, data):
+	return json.dumps([{'time':t, 'val':d} for t,d in zip(times, data)])
 
-def pack_timeseries(dat): 
-	return json.dumps([pack(*d) for d in dat])
 
 @app.route('/')
 def index():
@@ -46,7 +28,6 @@ def index():
 	return render_template('index.html', vidpaths=vidpaths, datpaths=datpaths)
 
 @app.route('/select', methods=['GET', 'POST'])
-@nocache
 def select():
 	if request.method=='POST':
 
@@ -62,10 +43,9 @@ def select():
 				datpath = datpaths[int(k.split('dataset_')[-1])]
 				print datpath
 				t, dat = load_timeseries(datpath)
-				print t[:10], dat[:10]
-				data.append([t,dat])
+				data.append({'name':datpath, 'data':pack_timeseries(t,dat)})
 
-		return render_template('viewer.html', vidpath=vidpath, data=pack_timeseries(data))
+		return render_template('viewer.html', vidpath=vidpath, data=data)
 
 @app.route('/video/<path:path>')
 def serve_movie(path):
