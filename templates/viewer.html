@@ -19,13 +19,19 @@
 {% endif %}
 <tr>
 <td>
+<div id="currentTime">0:0:0</div>
 <video width="400" height="300" id="video" controls>
   <source src="/video/{{ vidpath }}" type="video/{{ ext }}">
 </video>
 </td>
 </tr>
-
 </table>
+
+<input id="tagInput">
+<!-- <textarea id="newTag"></textarea><br> -->
+<ul id="tagList">
+</ul>
+
 {% for d in data %}
 <input type="checkbox" id="visible_{{ loop.index0 }}" checked>{{ d.name }}<br>
 {% endfor %}

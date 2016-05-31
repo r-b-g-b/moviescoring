@@ -1,4 +1,4 @@
-Chart = function() {
+var Chart = function() {
   var margin = {top: 20, right: 50, bottom: 30, left: 50};
   var width = 500 - margin.left - margin.right;
   var height = 200 - margin.top - margin.bottom;

@@ -22,12 +22,16 @@ def load_timeseries(path):
 def pack_timeseries(times, data):
 	return json.dumps([{'time':t, 'val':d} for t,d in zip(times, data)])
 
-
 @app.route('/')
 def index():
-	vidpaths = list_directory(app.config['MOVIE_DIR'], ['.ogv'])
-	datpaths = list_directory(app.config['DATA_DIR'], ['.npz'])
-	return render_template('index.html', vidpaths=vidpaths, datpaths=datpaths)
+	return render_template('viewer.html',
+		vidpath='demo.ogv')
+
+# @app.route('/')
+# def index():
+# 	vidpaths = list_directory(app.config['MOVIE_DIR'], ['.ogv'])
+# 	datpaths = list_directory(app.config['DATA_DIR'], ['.npz'])
+# 	return render_template('index.html', vidpaths=vidpaths, datpaths=datpaths)
 
 @app.route('/select', methods=['GET', 'POST'])
 def select():
@@ -54,6 +58,10 @@ def select():
 @app.route('/video/<path:path>')
 def serve_movie(path):
 	return send_from_directory(app.config['MOVIE_DIR'], path)
+
+@app.route('/synset/<syn>')
+def serve_synset(syn):
+	return 
 
 if __name__=='__main__':
 	app.run(debug=True)
